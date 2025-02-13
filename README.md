@@ -36,6 +36,8 @@ npx playwright install
    ]
    ```
 
+   您可以使用浏览器扩展 [Cookie-Editor](https://cookie-editor.com/) 来导出 JSON 格式的 cookie。安装扩展后，访问 Bilibili 并登录，然后使用 Cookie-Editor 导出 cookie。
+
 2. **准备字幕文件**：  
    确保您有一个要上传的字幕文件，并记下其路径。
 
