@@ -80,6 +80,7 @@ async function performSubtitleUpload(bvid, cid, cookies, subtitlePath) {
         // 上传字幕文件
         const fileInput = await frame.waitForSelector('input[type="file"]', { state: 'attached', timeout: 10000 });
         await fileInput.setInputFiles(subtitlePath); // 使用传入的字幕路径
+        await page.waitForTimeout(5000); // 等待 5 秒，以便文件上传
         console.log('字幕文件已上传');
 
         // 监听 URL 变化
