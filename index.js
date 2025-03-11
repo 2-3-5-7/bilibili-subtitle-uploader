@@ -112,8 +112,19 @@ async function uploadSubtitle(bvid, subtitlePath) {
     if (cid) {
         console.log(`稿件存在，cid 为: ${cid}`);
         const cookies = loadCookiesFromJson('cookies.json'); // 请替换为实际的 cookies 文件路径
-        const success = await performSubtitleUpload(bvid, cid, cookies, subtitlePath); // 传入字幕文件路径
-        return success;
+
+        // 重试机制
+        for (let attempt = 0; attempt < 3; attempt++) {
+            const success = await performSubtitleUpload(bvid, cid, cookies, subtitlePath); // 传入字幕文件路径
+            if (success) {
+                console.log('字幕上传成功');
+                return true;
+            } else {
+                console.log(`字幕上传失败，重试第 ${attempt + 1} 次`);
+            }
+        }
+        console.log('字幕上传失败，已达到最大重试次数');
+        return false;
     } else {
         console.log('无法获取到 cid，不能上传字幕。');
         return false;
@@ -130,8 +141,8 @@ if (args.length !== 2) {
 const [bvid, subtitlePath] = args;
 uploadSubtitle(bvid, subtitlePath).then(success => {
     if (success) {
-        console.log('字幕上传成功');
+        console.log('程序执行完成，字幕已成功上传到B站');
     } else {
-        console.log('字幕上传失败');
+        console.log('程序执行完成，字幕上传过程中遇到错误');
     }
 });
