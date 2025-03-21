@@ -52,6 +52,7 @@ async function performSubtitleUpload(bvid, cid, cookies, subtitlePath) {
         viewport: { width: 1920, height: 1080 }
     });
     const page = await context.newPage();
+    page.setDefaultTimeout(30 * 1000);
 
     try {
         // 先打开 www.bilibili.com
